@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI IQ Test — Benchmark для Искусственного Интеллекта</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #00f5a0;
+    --accent2: #7b5ea7;
+    --accent3: #ff6b35;
+    --text: #e8e8f0;
+    --text-dim: #888899;
+    --danger: #ff3b5c;
+    --gold: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(0,245,160,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(123,94,167,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .logo-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 12px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    animation: fadeIn 0.5s ease;
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 16px;
+    animation: slideUp 0.6s ease;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 16px;
+    font-family: 'Space Mono', monospace;
+    animation: slideUp 0.7s ease;
+  }
+
+  /* SCREENS */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 24px;
+  }
+
+  /* NAME ENTRY */
+  .name-section {
+    text-align: center;
+    padding: 60px 40px;
+  }
+
+  .name-section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .name-section p {
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  .ai-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .preset-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .preset-btn:hover, .preset-btn.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,245,160,0.06);
+  }
+
+  .name-input-wrap {
+    display: flex;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="text"]:focus { border-color: var(--accent); }
+  input[type="text"]::placeholder { color: var(--text-dim); }
+
+  /* BUTTONS */
+  .btn {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn:hover { background: #00ffaa; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--text-dim); color: var(--text); }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-danger:hover { background: rgba(255,59,92,0.1); }
+
+  /* QUIZ */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .ai-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    background: rgba(0,245,160,0.08);
+    border: 1px solid rgba(0,245,160,0.3);
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  .progress-wrap {
+    flex: 1;
+    margin: 0 20px;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .score-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+  }
+
+  /* QUESTION */
+  .question-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .category-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .cat-logic { background: rgba(0,245,160,0.1); color: var(--accent); border: 1px solid rgba(0,245,160,0.2); }
+  .cat-math { background: rgba(123,94,167,0.1); color: #b89fd4; border: 1px solid rgba(123,94,167,0.2); }
+  .cat-knowledge { background: rgba(255,107,53,0.1); color: #ff8f6b; border: 1px solid rgba(255,107,53,0.2); }
+  .cat-pattern { background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.2); }
+  .cat-language { background: rgba(100,149,237,0.1); color: #82a8f0; border: 1px solid rgba(100,149,237,0.2); }
+
+  .question-text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+
+  .options {
+    display: grid;
+    gap: 12px;
+  }
+
+  .option {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .option:hover { border-color: var(--accent); background: rgba(0,245,160,0.04); }
+
+  .option-letter {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    min-width: 22px;
+  }
+
+  .option.correct {
+    border-color: var(--accent);
+    background: rgba(0,245,160,0.08);
+    color: var(--accent);
+  }
+
+  .option.wrong {
+    border-color: var(--danger);
+    background: rgba(255,59,92,0.08);
+    color: var(--danger);
+  }
+
+  .option.disabled { pointer-events: none; opacity: 0.5; }
+  .option.correct.disabled { opacity: 1; }
+  .option.wrong.disabled { opacity: 1; }
+
+  .feedback-box {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .feedback-box.correct { background: rgba(0,245,160,0.06); border: 1px solid rgba(0,245,160,0.2); color: var(--accent); }
+  .feedback-box.wrong { background: rgba(255,59,92,0.06); border: 1px solid rgba(255,59,92,0.2); color: #ff7a8a; }
+
+  .next-btn-wrap { margin-top: 24px; text-align: right; }
+
+  /* TIMER */
+  .timer {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .timer.warning { color: var(--accent3); animation: pulse 1s infinite; }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  /* RESULTS */
+  .result-hero {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .iq-score-ring {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    position: relative;
+    background: var(--surface2);
+  }
+
+  .iq-score-ring::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) var(--pct, 0%), var(--surface2) 0%);
+    z-index: -1;
+    transition: --pct 1s ease;
+  }
+
+  .iq-number {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .iq-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .ai-name-result {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .result-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(0,245,160,0.05), rgba(123,94,167,0.05));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .verdict-emoji { font-size: 40px; margin-bottom: 10px; }
+  .verdict-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .verdict-text { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* LEADERBOARD */
+  .lb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .lb-title {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .lb-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+  }
+
+  .lb-entry {
+    display: grid;
+    grid-template-columns: 40px 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+
+  .lb-entry:hover { border-color: var(--border); }
+
+  .lb-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .lb-rank.gold { color: #ffd700; }
+  .lb-rank.silver { color: #c0c0c0; }
+  .lb-rank.bronze { color: #cd7f32; }
+
+  .lb-ai-name {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .lb-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .lb-iq {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: right;
+  }
+
+  .lb-iq-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .lb-correct {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 32px;
+  }
+
+  .nav-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-tab.active {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* REVIEW */
+  .review-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .review-q { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .review-answer { font-family: 'Space Mono', monospace; font-size: 12px; margin: 4px 0; }
+  .review-answer.correct-answer { color: var(--accent); }
+  .review-answer.wrong-answer { color: var(--danger); }
+
+  /* SEPARATOR */
+  .sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 30px 0;
+  }
+
+  /* SCROLLABLE LEADERBOARD */
+  .lb-list { max-height: 500px; overflow-y: auto; padding-right: 4px; }
+  .lb-list::-webkit-scrollbar { width: 4px; }
+  .lb-list::-webkit-scrollbar-track { background: var(--surface); }
+  .lb-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* FILTER */
+  .lb-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .filter-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .lb-entry { grid-template-columns: 30px 1fr auto; }
+    .lb-correct { display: none; }
+    .quiz-header { flex-wrap: wrap; gap: 10px; }
+    .name-input-wrap { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo-tag">AI BENCHMARK v2.0</div>
+    <h1>IQ <span>Test</span><br>для ИИ</h1>
+    <p class="subtitle">// логика · математика · знания · паттерны · язык</p>
+  </header>
+
+  <!-- NAV -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('test')">🧠 Пройти тест</button>
+    <button class="nav-tab" onclick="showTab('board')">🏆 Таблица</button>
+  </div>
+
+  <!-- TEST TAB -->
+  <div id="tab-test">
+    <!-- SCREEN: Name Entry -->
+    <div id="screen-name" class="screen active card">
+      <div class="name-section">
+        <h2>Кто проходит тест?</h2>
+        <p>Выбери имя ИИ из списка ниже или введи своё.<br>Результат будет сохранён отдельно для каждого ИИ.</p>
+
+        <div class="ai-presets">
+          <button class="preset-btn" onclick="selectPreset(this, 'ChatGPT')">ChatGPT</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Gemini')">Gemini</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Grok')">Grok</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Claude')">Claude</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Llama')">Llama</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Mistral')">Mistral</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Copilot')">Copilot</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'DeepSeek')">DeepSeek</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Perplexity')">Perplexity</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'Qwen')">Qwen</button>
+        </div>
+
+        <div class="name-input-wrap">
+          <input type="text" id="ai-name-input" placeholder="Или введи своё имя..." maxlength="40">
+          <button class="btn" onclick="startTest()">Начать →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN: Quiz -->
+    <div id="screen-quiz" class="screen">
+      <div class="card">
+        <div class="quiz-header">
+          <div class="ai-badge" id="quiz-ai-badge">—</div>
+          <div class="progress-wrap">
+            <div class="progress-info">
+              <span id="q-counter">Вопрос 1 / 20</span>
+              <span class="timer" id="timer">⏱ 30с</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="score-badge">★ <span id="live-score">0</span></div>
+        </div>
+
+        <div id="question-num" class="question-num">ВОПРОС 01</div>
+        <div id="category-tag" class="category-tag cat-logic">ЛОГИКА</div>
+        <div id="question-text" class="question-text">...</div>
+        <div class="options" id="options-list"></div>
+        <div class="feedback-box" id="feedback-box"></div>
+        <div class="next-btn-wrap" id="next-btn-wrap" style="display:none">
+          <button class="btn" onclick="nextQuestion()">Следующий →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN: Results -->
+    <div id="screen-result" class="screen">
+      <div class="card result-hero">
+        <div class="iq-score-ring" id="iq-ring">
+          <div class="iq-number" id="result-iq">—</div>
+          <div class="iq-label">IQ SCORE</div>
+        </div>
+        <div class="ai-name-result" id="result-ai-name">—</div>
+        <div class="result-date" id="result-date">—</div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value" id="res-correct" style="color:var(--accent)">0</div>
+            <div class="stat-label">ВЕРНЫХ</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="res-wrong" style="color:var(--danger)">0</div>
+            <div class="stat-label">ОШИБОК</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="res-pct" style="color:var(--gold)">0%</div>
+            <div class="stat-label">ТОЧНОСТЬ</div>
+          </div>
+        </div>
+
+        <div class="verdict-box" id="verdict-box"></div>
+
+        <div class="result-actions">
+          <button class="btn" onclick="startTest(true)">🔄 Пройти снова</button>
+          <button class="btn-ghost" onclick="showTab('board')">🏆 Таблица лидеров</button>
+          <button class="btn-ghost" onclick="showReview()">📋 Разбор ошибок</button>
+        </div>
+      </div>
+
+      <!-- Review -->
+      <div id="review-section" style="display:none">
+        <hr class="sep">
+        <div style="font-size:18px;font-weight:700;margin-bottom:16px;">📋 Разбор вопросов</div>
+        <div id="review-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD TAB -->
+  <div id="tab-board" style="display:none">
+    <div class="card">
+      <div class="lb-header">
+        <div class="lb-title">🏆 Таблица лидеров</div>
+        <button class="btn-danger" onclick="clearAll()">Очистить всё</button>
+      </div>
+
+      <div class="lb-filters" id="lb-filters"></div>
+
+      <div class="lb-list" id="lb-list">
+        <div class="lb-empty">Пока нет результатов.<br>Пройди тест первым!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== QUESTIONS BANK =====
+const QUESTIONS = [
+  // LOGIC
+  { cat: 'logic', text: 'Если все Bloops являются Razzies, а все Razzies являются Lazzies, то все Bloops являются...?', options: ['Razzies', 'Lazzies', 'Ни то, ни другое', 'Иногда Lazzies'], answer: 1, explanation: 'Транзитивное свойство: Bloops → Razzies → Lazzies, значит Bloops → Lazzies.' },
+  { cat: 'logic', text: 'У отца 5 дочерей. У каждой дочери есть один брат. Сколько детей у отца?', options: ['5', '6', '10', '11'], answer: 1, explanation: 'У всех 5 дочерей один общий брат — итого 6 детей.' },
+  { cat: 'logic', text: 'Чем больше берёшь, тем больше оставляешь позади. Что это?', options: ['Время', 'Деньги', 'Шаги', 'Воспоминания'], answer: 2, explanation: 'Шаги — каждый сделанный шаг остаётся позади тебя.' },
+  { cat: 'logic', text: 'Если перевернуть число 9006, что получится?', options: ['9006', '6009', '9009', '6006'], answer: 1, explanation: 'Перевернув 9006, получаем 6009.' },
+  { cat: 'logic', text: 'Мария смотрит на фотографию и говорит: "Этот человек — сын единственного сына моей матери." Кто на фото?', options: ['Её отец', 'Её брат', 'Её сын', 'Её племянник'], answer: 2, explanation: 'Единственный сын матери Марии — это сам Мария (точнее её брат... нет). Единственный сын матери — это Мария, значит на фото её сын.' },
+  { cat: 'logic', text: 'Какое слово лишнее: кошка, собака, воробей, дельфин, орёл?', options: ['Кошка', 'Воробей', 'Орёл', 'Дельфин'], answer: 1, explanation: 'Воробей и орёл — птицы. Дельфин живёт в воде. Кошка и собака — домашние животные. Лишний — дельфин (единственный водный), но если по классу: воробей и орёл — птицы, остальные нет. Воробей — лишний (он не хищник среди хищников)... Дельфин — единственный нелетающий и не наземный.' },
+  { cat: 'logic', text: 'Есть 3 коробки: с яблоками, грушами и смесью. Все подписи перепутаны. Сколько фруктов нужно взять, чтобы узнать содержимое всех коробок?', options: ['1', '2', '3', '6'], answer: 0, explanation: 'Достаточно одного фрукта из коробки "Смесь" — она не может содержать смесь, значит в ней один вид. Остальное определяется логически.' },
+  { cat: 'logic', text: 'Какая фигура следующая в ряду: △ ▲ △ ▲ △ ...?', options: ['▲', '△', '▽', '◇'], answer: 0, explanation: 'Ряд чередуется: пустой, заполненный. После пустого △ следует заполненный ▲.' },
+
+  // MATH
+  { cat: 'math', text: 'Если поезд едет со скоростью 60 км/ч и проезжает 150 км, сколько минут займёт поездка?', options: ['90', '120', '150', '180'], answer: 2, explanation: '150 ÷ 60 = 2.5 часа = 150 минут.' },
+  { cat: 'math', text: 'Какое простое число следует после 89?', options: ['91', '93', '97', '99'], answer: 2, explanation: '91 = 7×13, 93 = 3×31, 97 — простое, 99 = 9×11. Ответ: 97.' },
+  { cat: 'math', text: 'Если 2^10 = 1024, то 2^11 = ?', options: ['1048', '2048', '4096', '1124'], answer: 1, explanation: '2^11 = 2^10 × 2 = 1024 × 2 = 2048.' },
+  { cat: 'math', text: 'Площадь квадрата равна 144. Какова длина его диагонали?', options: ['12', '12√2', '24', '6√2'], answer: 1, explanation: 'Сторона = 12. Диагональ = 12√2 ≈ 16.97.' },
+  { cat: 'math', text: 'Сумма углов любого треугольника равна...?', options: ['90°', '180°', '270°', '360°'], answer: 1, explanation: 'Сумма внутренних углов треугольника всегда 180°.' },
+
+  // KNOWLEDGE
+  { cat: 'knowledge', text: 'Какой элемент обозначается символом Au в таблице Менделеева?', options: ['Серебро', 'Алюминий', 'Золото', 'Аргон'], answer: 2, explanation: 'Au — от латинского Aurum, что означает Золото.' },
+  { cat: 'knowledge', text: 'В каком году был запущен первый искусственный спутник Земли?', options: ['1955', '1957', '1961', '1969'], answer: 1, explanation: 'Советский спутник-1 был запущен 4 октября 1957 года.' },
+  { cat: 'knowledge', text: 'Кто написал "Войну и мир"?', options: ['Достоевский', 'Тургенев', 'Чехов', 'Толстой'], answer: 3, explanation: 'Лев Николаевич Толстой написал роман "Война и мир" (1865–1869).' },
+  { cat: 'knowledge', text: 'Какова скорость света в вакууме (приближённо)?', options: ['300 000 км/с', '150 000 км/с', '3 000 000 км/с', '30 000 км/с'], answer: 0, explanation: 'Скорость света c ≈ 299 792 458 м/с ≈ 300 000 км/с.' },
+
+  // PATTERNS
+  { cat: 'pattern', text: 'Продолжи ряд: 1, 1, 2, 3, 5, 8, 13, ...', options: ['18', '20', '21', '25'], answer: 2, explanation: 'Последовательность Фибоначчи: каждое число = сумма двух предыдущих. 8+13=21.' },
+  { cat: 'pattern', text: 'Найди закономерность: 2, 6, 12, 20, 30, ...', options: ['40', '42', '44', '45'], answer: 1, explanation: 'Разности: 4, 6, 8, 10, 12. Следующее: 30+12=42. Формула: n(n+1).' },
+  { cat: 'pattern', text: 'Какое число пропущено: 1, 4, 9, 16, ?, 36', options: ['20', '24', '25', '28'], answer: 2, explanation: 'Последовательность квадратов: 1², 2², 3², 4², 5²=25, 6²=36.' },
+
+  // LANGUAGE
+  { cat: 'language', text: 'Слово "клептомания" означает...', options: ['Страх воровства', 'Навязчивое желание красть', 'Любовь к порядку', 'Нарушение памяти'], answer: 1, explanation: 'Клептомания — психическое расстройство, выражающееся в импульсивном желании красть.' },
+  { cat: 'language', text: 'Что является антонимом слова "эфемерный"?', options: ['Мгновенный', 'Вечный', 'Редкий', 'Прозрачный'], answer: 1, explanation: 'Эфемерный = кратковременный, мимолётный. Антоним — вечный, постоянный.' },
+  { cat: 'language', text: 'Какое слово является синонимом "апатия"?', options: ['Энтузиазм', 'Безразличие', 'Тревога', 'Гордость'], answer: 1, explanation: 'Апатия — состояние безразличия, равнодушия к окружающему.' },
+];
+
+// ===== STATE =====
+let currentAI = '';
+let currentQuestions = [];
+let currentQIndex = 0;
+let score = 0;
+let answers = [];
+let timerInterval = null;
+let timeLeft = 30;
+let testStartTime = null;
+
+// ===== HELPERS =====
+function shuffle(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function getIQ(correct, total) {
+  const pct = correct / total;
+  if (pct >= 0.95) return 145;
+  if (pct >= 0.85) return 130;
+  if (pct >= 0.75) return 120;
+  if (pct >= 0.60) return 110;
+  if (pct >= 0.45) return 100;
+  if (pct >= 0.30) return 90;
+  if (pct >= 0.15) return 80;
+  return 70;
+}
+
+function getVerdict(iq) {
+  if (iq >= 145) return { emoji: '🌌', title: 'Сверхинтеллект', text: 'Феноменальный результат. Этот ИИ демонстрирует когнитивные способности на уровне гениев.' };
+  if (iq >= 130) return { emoji: '🧠', title: 'Высокий интеллект', text: 'Отличный результат! Уровень одарённости, топ 2% по всем метрикам.' };
+  if (iq >= 120) return { emoji: '⭐', title: 'Выше среднего', text: 'Уверенный результат. Хорошее рассуждение и решение задач.' };
+  if (iq >= 110) return { emoji: '✅', title: 'Средний+', text: 'Немного выше среднего. Большинство вопросов решено верно.' };
+  if (iq >= 100) return { emoji: '📊', title: 'Средний уровень', text: 'Стандартный результат. Есть зоны для улучшения.' };
+  if (iq >= 90) return { emoji: '📉', title: 'Ниже среднего', text: 'Некоторые задачи вызвали трудности. Попробуй ещё раз!' };
+  return { emoji: '🔄', title: 'Требует работы', text: 'Этот тест оказался сложным. Не сдавайся!' };
+}
+
+function catLabel(cat) {
+  const map = { logic: 'ЛОГИКА', math: 'МАТЕМАТИКА', knowledge: 'ЗНАНИЯ', pattern: 'ПАТТЕРНЫ', language: 'ЯЗЫК' };
+  return map[cat] || cat.toUpperCase();
+}
+
+function catClass(cat) {
+  return 'cat-' + cat;
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('ru-RU') + ' ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+}
+
+// ===== TABS =====
+function showTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach((t, i) => {
+    t.classList.toggle('active', (tab === 'test' && i === 0) || (tab === 'board' && i === 1));
+  });
+  document.getElementById('tab-test').style.display = tab === 'test' ? 'block' : 'none';
+  document.getElementById('tab-board').style.display = tab === 'board' ? 'block' : 'none';
+  if (tab === 'board') renderLeaderboard();
+}
+
+// ===== NAME ENTRY =====
+function selectPreset(btn, name) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('ai-name-input').value = name;
+}
+
+function startTest(retry) {
+  const nameInput = document.getElementById('ai-name-input');
+  const name = nameInput.value.trim();
+  if (!name) {
+    nameInput.style.borderColor = 'var(--danger)';
+    nameInput.placeholder = 'Введи имя ИИ!';
+    setTimeout(() => { nameInput.style.borderColor = ''; }, 1500);
+    return;
+  }
+  currentAI = name;
+  currentQIndex = 0;
+  score = 0;
+  answers = [];
+  testStartTime = Date.now();
+
+  // Pick 20 questions: shuffle the full bank
+  currentQuestions = shuffle(QUESTIONS).slice(0, Math.min(20, QUESTIONS.length));
+
+  showScreen('screen-quiz');
+  document.getElementById('quiz-ai-badge').textContent = '🤖 ' + currentAI;
+  loadQuestion();
+}
+
+// ===== QUIZ =====
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function loadQuestion() {
+  clearInterval(timerInterval);
+  const q = currentQuestions[currentQIndex];
+  const total = currentQuestions.length;
+
+  document.getElementById('q-counter').textContent = `Вопрос ${currentQIndex + 1} / ${total}`;
+  document.getElementById('question-num').textContent = 'ВОПРОС ' + String(currentQIndex + 1).padStart(2, '0');
+  document.getElementById('progress-fill').style.width = ((currentQIndex / total) * 100) + '%';
+  document.getElementById('live-score').textContent = score;
+
+  const catEl = document.getElementById('category-tag');
+  catEl.textContent = catLabel(q.cat);
+  catEl.className = 'category-tag ' + catClass(q.cat);
+
+  document.getElementById('question-text').textContent = q.text;
+
+  const optsList = document.getElementById('options-list');
+  optsList.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span>${opt}`;
+    btn.onclick = () => selectAnswer(i);
+    optsList.appendChild(btn);
+  });
+
+  document.getElementById('feedback-box').style.display = 'none';
+  document.getElementById('feedback-box').className = 'feedback-box';
+  document.getElementById('next-btn-wrap').style.display = 'none';
+
+  startTimer();
+}
+
+function startTimer() {
+  timeLeft = 30;
+  const timerEl = document.getElementById('timer');
+  timerEl.textContent = '⏱ 30с';
+  timerEl.className = 'timer';
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = `⏱ ${timeLeft}с`;
+    if (timeLeft <= 10) timerEl.className = 'timer warning';
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timeExpired();
+    }
+  }, 1000);
+}
+
+function timeExpired() {
+  const q = currentQuestions[currentQIndex];
+  answers.push({ question: q, chosen: -1, correct: false });
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((o, i) => {
+    o.classList.add('disabled');
+    if (i === q.answer) o.classList.add('correct');
+  });
+  showFeedback(false, '⏰ Время вышло! ' + q.explanation);
+  document.getElementById('next-btn-wrap').style.display = 'block';
+}
+
+function selectAnswer(idx) {
+  clearInterval(timerInterval);
+  const q = currentQuestions[currentQIndex];
+  const isCorrect = idx === q.answer;
+  if (isCorrect) score++;
+
+  answers.push({ question: q, chosen: idx, correct: isCorrect });
+
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((o, i) => {
+    o.classList.add('disabled');
+    if (i === q.answer) o.classList.add('correct');
+    else if (i === idx && !isCorrect) o.classList.add('wrong');
+  });
+
+  showFeedback(isCorrect, (isCorrect ? '✅ Верно! ' : '❌ Неверно. ') + q.explanation);
+  document.getElementById('next-btn-wrap').style.display = 'block';
+  document.getElementById('live-score').textContent = score;
+}
+
+function showFeedback(correct, msg) {
+  const fb = document.getElementById('feedback-box');
+  fb.textContent = msg;
+  fb.className = 'feedback-box ' + (correct ? 'correct' : 'wrong');
+  fb.style.display = 'block';
+}
+
+function nextQuestion() {
+  currentQIndex++;
+  if (currentQIndex >= currentQuestions.length) {
+    finishTest();
+  } else {
+    loadQuestion();
+  }
+}
+
+// ===== FINISH =====
+function finishTest() {
+  clearInterval(timerInterval);
+  const total = currentQuestions.length;
+  const iq = getIQ(score, total);
+  const pct = Math.round((score / total) * 100);
+  const verdict = getVerdict(iq);
+  const elapsed = Math.round((Date.now() - testStartTime) / 1000);
+
+  // Save to localStorage
+  const entry = {
+    id: Date.now(),
+    aiName: currentAI,
+    iq,
+    correct: score,
+    total,
+    pct,
+    elapsed,
+    ts: Date.now(),
+    answers: answers.map(a => ({
+      q: a.question.text,
+      cat: a.question.cat,
+      options: a.question.options,
+      answer: a.question.answer,
+      chosen: a.chosen,
+      correct: a.correct,
+      explanation: a.question.explanation
+    }))
+  };
+
+  const stored = JSON.parse(localStorage.getItem('ai_iq_results') || '[]');
+  stored.push(entry);
+  localStorage.setItem('ai_iq_results', JSON.stringify(stored));
+
+  // Show results
+  document.getElementById('result-iq').textContent = iq;
+  document.getElementById('result-ai-name').textContent = '🤖 ' + currentAI;
+  document.getElementById('result-date').textContent = formatDate(entry.ts) + ' · ' + elapsed + 'с';
+  document.getElementById('res-correct').textContent = score;
+  document.getElementById('res-wrong').textContent = total - score;
+  document.getElementById('res-pct').textContent = pct + '%';
+
+  // Ring
+  const ring = document.getElementById('iq-ring');
+  const pctDeg = Math.round((iq - 70) / 75 * 100);
+  ring.style.setProperty('--pct', pctDeg + '%');
+
+  // Verdict
+  document.getElementById('verdict-box').innerHTML = `
+    <div class="verdict-emoji">${verdict.emoji}</div>
+    <div class="verdict-title">${verdict.title}</div>
+    <div class="verdict-text">${verdict.text}</div>
+  `;
+
+  document.getElementById('review-section').style.display = 'none';
+  showScreen('screen-result');
+}
+
+// ===== REVIEW =====
+function showReview() {
+  const section = document.getElementById('review-section');
+  section.style.display = 'block';
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  answers.forEach((a, i) => {
+    const q = a.question;
+    const div = document.createElement('div');
+    div.className = 'review-item';
+    let answersHtml = q.options.map((opt, idx) => {
+      let cls = '';
+      if (idx === q.answer) cls = 'correct-answer';
+      else if (idx === a.chosen && !a.correct) cls = 'wrong-answer';
+      return `<div class="review-answer ${cls}">${letters[idx]}) ${opt}${idx === q.answer ? ' ✓' : ''}${idx === a.chosen && !a.correct ? ' ✗' : ''}</div>`;
+    }).join('');
+
+    div.innerHTML = `
+      <div class="review-q">${i + 1}. ${q.text}</div>
+      ${answersHtml}
+      <div style="margin-top:10px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text-dim);">${q.explanation}</div>
+    `;
+    list.appendChild(div);
+  });
+
+  section.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== LEADERBOARD =====
+let filterAI = 'all';
+
+function renderLeaderboard() {
+  const stored = JSON.parse(localStorage.getItem('ai_iq_results') || '[]');
+  const list = document.getElementById('lb-list');
+  const filtersEl = document.getElementById('lb-filters');
+
+  // Build filter buttons
+  const names = [...new Set(stored.map(e => e.aiName))].sort();
+  filtersEl.innerHTML = `<button class="filter-btn ${filterAI === 'all' ? 'active' : ''}" onclick="setFilter('all')">Все</button>`;
+  names.forEach(name => {
+    filtersEl.innerHTML += `<button class="filter-btn ${filterAI === name ? 'active' : ''}" onclick="setFilter('${name}')">${name}</button>`;
+  });
+
+  // Filter
+  let data = stored;
+  if (filterAI !== 'all') data = data.filter(e => e.aiName === filterAI);
+
+  // Sort by IQ desc, then score desc
+  data.sort((a, b) => b.iq - a.iq || b.correct - a.correct);
+
+  if (!data.length) {
+    list.innerHTML = '<div class="lb-empty">Нет результатов для показа.</div>';
+    return;
+  }
+
+  list.innerHTML = '';
+  data.forEach((entry, i) => {
+    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+    const rankIcon = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'lb-entry';
+    div.innerHTML = `
+      <div class="lb-rank ${rankClass}">${rankIcon}</div>
+      <div>
+        <div class="lb-ai-name">🤖 ${entry.aiName}</div>
+        <div class="lb-meta">${formatDate(entry.ts)} · ${entry.elapsed}с · ${entry.pct}%</div>
+      </div>
+      <div class="lb-correct">${entry.correct}/${entry.total}</div>
+      <div>
+        <div class="lb-iq">${entry.iq}</div>
+        <div class="lb-iq-label">IQ</div>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function setFilter(name) {
+  filterAI = name;
+  renderLeaderboard();
+}
+
+function clearAll() {
+  if (confirm('Удалить все результаты? Это действие нельзя отменить.')) {
+    localStorage.removeItem('ai_iq_results');
+    filterAI = 'all';
+    renderLeaderboard();
+  }
+}
+
+// ===== INIT =====
+// If returning to start screen
+function goHome() {
+  document.getElementById('ai-name-input').value = '';
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+  showScreen('screen-name');
+}
+</script>
+</body>
+</html>
